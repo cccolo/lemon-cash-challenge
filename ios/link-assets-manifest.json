@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/NeueMachina-Light.otf",
+      "sha1": "b906dc68e1c43699f3cb17948574a05659de4c98"
+    },
+    {
+      "path": "src/assets/fonts/NeueMachina-Regular.otf",
+      "sha1": "fc7ee7f91e9d7d2d1eadbdc353c2f77843714b92"
+    },
+    {
+      "path": "src/assets/fonts/NeueMachina-Ultrabold.otf",
+      "sha1": "c155e76c72de772a8b166edc9d814bf734e38054"
+    }
+  ]
+}

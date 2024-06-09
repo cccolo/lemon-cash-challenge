@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "308911930289",
+    "project_id": "lemon-cash-challenge",
+    "storage_bucket": "lemon-cash-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308911930289:android:395d69fb9b16590ac15b90",
+        "android_client_info": {
+          "package_name": "com.lemoncashchallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308911930289-ea50o99j5jnfq2d5mk2dt924m0fvq2b6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lemoncashchallenge",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "308911930289-4oi69iqitgk3lib6e3vm132vdiqr7kkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1_IM7jHBxcRcZ_PDLhUyxNpr7gruAF9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308911930289-4oi69iqitgk3lib6e3vm132vdiqr7kkf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "308911930289-jb89fqg4rd0vmnqle2ivv13u0qrbchq0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.lemonCashChallenge"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
