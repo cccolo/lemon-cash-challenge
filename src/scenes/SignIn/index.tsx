@@ -1,11 +1,23 @@
 import * as React from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import {Logo} from '../../assets/images';
 import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
+import {Logo} from '../../assets/images';
 import {useAuth} from '../../hooks/useAuth';
+import {Alert} from '../../components';
 
 export const SignInScreen: React.FC = () => {
-  const {signIn} = useAuth();
+  const {signIn, error} = useAuth();
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    if (error) {
+      setModalVisible(true);
+    }
+  }, [error]);
+
+  const closeModal = React.useCallback(() => {
+    setModalVisible(false);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -15,6 +27,13 @@ export const SignInScreen: React.FC = () => {
           Conoce la cotización de Bitcoin, USDT, Ethereum y otras criptomonedas
           en tiempo real.
         </Text>
+        {error && (
+          <Alert
+            message={error}
+            modalVisible={modalVisible}
+            onClose={closeModal}
+          />
+        )}
         <View style={styles.signIn}>
           <GoogleSigninButton
             size={GoogleSigninButton.Size.Wide}
