@@ -117,28 +117,33 @@ Una biblioteca de utilidades de JavaScript que proporciona funciones de ayuda pa
 
 <br>
 <br>
-# RUN APP IOS
+
+# Demo en iOS
+
 <div align="center">
   <video width="600" controls>
-    <source src="./doc/ios.mp4" type="video/mp4">
+    <source src="[./doc/ios.mp4](https://github.com/cccolo/lemon-cash-challenge/assets/11674528/15c17eb2-5538-4db7-a6ba-65866e3d59e2)" type="video/mp4">
+  </video>
+</div>
+
+<br>
+<br>
+
+# Demo en Android
+<div align="center">
+  <video width="600" controls>
+    <source src="[./doc/android.mp4](https://github.com/cccolo/lemon-cash-challenge/assets/11674528/d83e323e-d5ce-450f-a22f-d02acd5f06d8)" type="video/mp4">
   </video>
 </div>
 <br>
 <br>
 
-# RUN APP ANDROID
-<div align="center">
-  <video width="600" controls>
-    <source src="./doc/android.mp4" type="video/mp4">
-  </video>
-</div>
-<br>
-<br>
+# Test
 
-# TESTS
 <div align="center">
   <video width="600" controls>
-    <source src="./doc/test.mp4" type="video/mp4">
+    <source src="[./doc/test.mp4](https://github.com/cccolo/lemon-cash-challenge/assets/11674528/fa17087b-a18f-4324-a8b7-9a7b52602801
+)" type="video/mp4">
   </video>
 </div>
 
