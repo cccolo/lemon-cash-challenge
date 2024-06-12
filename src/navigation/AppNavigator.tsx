@@ -1,26 +1,56 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {SignInScreen} from '../scenes/SignIn';
 import CryptoListScreen from '../scenes/CryptoList';
 import {CryptoDetailsScreen} from '../scenes/CryptoDetails';
+import {Settings} from '../components';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
+
+const screenOptions: any = {
+  headerShown: false,
+  drawerPosition: 'right',
+  drawerType: 'front',
+  drawerStyle: {
+    width: 200,
+  },
+  swipeEdgeWidth: 0,
+};
+
+const AppStack = ({isSignout}: {isSignout: boolean}) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="SignInScreen"
+      screenOptions={screenOptions}>
+      {isSignout ? (
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
+      ) : (
+        <>
+          <Stack.Screen name="CryptoListScreen" component={CryptoListScreen} />
+          <Stack.Screen
+            name="CryptoDetailScreen"
+            component={CryptoDetailsScreen}
+          />
+        </>
+      )}
+    </Stack.Navigator>
+  );
+};
 
 const AppNavigator = ({isSignout}: {isSignout: boolean}) => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="CryptoList" component={CryptoListScreen} />
-        {/* {isSignout ? (
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-        ) : (
-          <>
-            <Stack.Screen name="CryptoList" component={CryptoListScreen} />
-            <Stack.Screen name="CryptoDetail" component={CryptoDetailsScreen} />
-          </>
-        )} */}
-      </Stack.Navigator>
+      <Drawer.Navigator
+        screenOptions={screenOptions}
+        drawerContent={Settings}
+        detachInactiveScreens>
+        <Drawer.Screen name="App">
+          {() => <AppStack isSignout={isSignout} />}
+        </Drawer.Screen>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };

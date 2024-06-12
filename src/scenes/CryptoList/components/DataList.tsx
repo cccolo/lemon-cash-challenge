@@ -16,6 +16,7 @@ type Props = {
   fetchNextPage?: () => void;
   hasPagination?: boolean;
   isLoading: boolean;
+  onSelectItem: (id: number) => void;
 };
 
 export const DataList: React.FC<Props> = ({
@@ -23,8 +24,9 @@ export const DataList: React.FC<Props> = ({
   fetchNextPage,
   hasPagination,
   data,
+  onSelectItem,
 }: Props) => {
-  const {setFavoritesItems, favorites} = useCryptocurrencyFavorites();
+  const {setFavoriteItems, favorites} = useCryptocurrencyFavorites();
 
   const cryptocurrencyItemExtractorKey = React.useCallback(
     (item: CryptocurrencyData) => {
@@ -53,28 +55,46 @@ export const DataList: React.FC<Props> = ({
   const renderItem = React.useCallback(
     (item: CryptocurrencyData) => {
       return (
-        <View style={styles.container}>
-          <View>
-            <Text style={[styles.description, styles.symbol]}>
-              {item.symbol}
-            </Text>
+        <TouchableOpacity onPress={() => onSelectItem(item.id)}>
+          <View style={styles.container}>
             <View>
-              <Text style={[styles.description, styles.name]}>{item.name}</Text>
+              <Text style={[styles.description, styles.symbol]}>
+                {item.symbol}
+              </Text>
+              <View>
+                <Text style={[styles.description, styles.name]}>
+                  {item.name}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.price}>
+              <Text style={styles.description}>{item.quote.USD.price}</Text>
+            </View>
+            <View style={styles.favorites}>
+              <TouchableOpacity
+                onPress={() => setFavoriteItems(item.id)}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                {favorites[item.id] ? <StartSelectIcon /> : <StartIcon />}
+              </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.price}>
-            <Text style={styles.description}>{item.quote.USD.price}</Text>
-          </View>
-          <View style={styles.favorites}>
-            <TouchableOpacity onPress={() => setFavoritesItems(item.id)}>
-              {favorites[item.id] ? <StartSelectIcon /> : <StartIcon />}
-            </TouchableOpacity>
-          </View>
-        </View>
+        </TouchableOpacity>
       );
     },
-    [favorites, setFavoritesItems],
+    [favorites, onSelectItem, setFavoriteItems],
   );
+
+  const listEmptyComponent = React.useCallback(() => {
+    return (
+      !isLoading && (
+        <View style={styles.container}>
+          <Text style={styles.description}>
+            No hay información para mostrar.
+          </Text>
+        </View>
+      )
+    );
+  }, [isLoading]);
 
   return (
     <FlatList
@@ -84,6 +104,7 @@ export const DataList: React.FC<Props> = ({
       ListFooterComponent={ListEndLoader}
       renderItem={({item}) => renderItem(item)}
       keyExtractor={cryptocurrencyItemExtractorKey}
+      ListEmptyComponent={listEmptyComponent}
     />
   );
 };

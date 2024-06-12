@@ -9,7 +9,7 @@ interface Favorites {
 export const useCryptocurrencyFavorites = () => {
   const [favorites, setFavorites] = React.useState<Favorites>({});
 
-  const setFavoritesItems = React.useCallback(
+  const setFavoriteItems = React.useCallback(
     (id: number) => {
       if (favorites[id]) {
         const newFavorites: Favorites = {...favorites};
@@ -53,9 +53,14 @@ export const useCryptocurrencyFavorites = () => {
     return (await getData('cryptocurrencyFav')) || '';
   };
 
+  const clearFavoriteItems = async () => {
+    return await setData('cryptocurrencyFav', '');
+  };
+
   return {
-    setFavoritesItems,
+    setFavoriteItems,
     favorites,
     favoritesToString,
+    clearFavoriteItems,
   };
 };

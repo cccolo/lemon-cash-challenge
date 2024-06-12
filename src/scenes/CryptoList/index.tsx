@@ -1,25 +1,28 @@
 import * as React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   useCryptocurrency,
   useCryptocurrencyFavorites,
   useCryptocurrencySearch,
-  useCryptocurrencyFavoriteSearch,
+  useCryptocurrencyById,
 } from '../../hooks';
 import {Cryptocurrency, CryptocurrencyData} from '../../intefaces';
 import {OptionsMenu, DataList} from './components';
-import {Alert} from '../../components';
+import {Alert, Header} from '../../components';
 
-const CryptoListScreen: React.FC<any> = () => {
+const CryptoListScreen: React.FC = () => {
   const [showError, setShowError] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState<string>('');
   const [enableFav, setEnableFav] = React.useState<boolean>(false);
   const [favoritesId, setFavoritesId] = React.useState<string>('');
 
+  // TODO: tipar navigation
+  const navigation = useNavigation<any>();
   const {favoritesToString} = useCryptocurrencyFavorites();
   const {cryptocurrencyInfiniteQuery} = useCryptocurrency();
   const {cryptocurrencyQueries} = useCryptocurrencySearch(searchValue);
-  const {cryptocurrencyFavoriteQuery} = useCryptocurrencyFavoriteSearch(
+  const {cryptocurrencyByIdQuery} = useCryptocurrencyById(
     favoritesId,
     enableFav,
   );
@@ -53,8 +56,8 @@ const CryptoListScreen: React.FC<any> = () => {
   }, [cryptocurrencyBySlugQuery.data, cryptocurrencyBySymbolQuery.data]);
 
   const flattenedCryptocurrencyFavData = React.useMemo(() => {
-    return extractData(cryptocurrencyFavoriteQuery.data);
-  }, [cryptocurrencyFavoriteQuery.data]);
+    return extractData(cryptocurrencyByIdQuery.data);
+  }, [cryptocurrencyByIdQuery.data]);
 
   const flattenedCryptocurrencyInifity: CryptocurrencyData[] = React.useMemo(
     () =>
@@ -86,8 +89,13 @@ const CryptoListScreen: React.FC<any> = () => {
     }
   };
 
+  const goToCryptoDetail = (id: number) => {
+    navigation.navigate('CryptoDetailScreen', {id});
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <Header title="Listado de Criptomonedas" hideBack />
       <View style={styles.content}>
         <OptionsMenu
           onAction={onAction}
@@ -95,13 +103,15 @@ const CryptoListScreen: React.FC<any> = () => {
         />
         {enableFav && (
           <DataList
+            onSelectItem={goToCryptoDetail}
             data={flattenedCryptocurrencyFavData}
             hasPagination={false}
-            isLoading={cryptocurrencyFavoriteQuery.isFetching}
+            isLoading={cryptocurrencyByIdQuery.isFetching}
           />
         )}
         {!enableFav && searchValue && (
           <DataList
+            onSelectItem={goToCryptoDetail}
             data={flattenedCryptocurrencyDataFromSearch}
             isLoading={
               cryptocurrencyBySlugQuery.isFetching ||
@@ -111,6 +121,7 @@ const CryptoListScreen: React.FC<any> = () => {
         )}
         {!enableFav && !searchValue && (
           <DataList
+            onSelectItem={goToCryptoDetail}
             data={flattenedCryptocurrencyInifity}
             hasPagination={cryptocurrencyInfiniteQuery.hasNextPage}
             fetchNextPage={cryptocurrencyInfiniteQuery.fetchNextPage}
