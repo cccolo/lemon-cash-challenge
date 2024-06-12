@@ -1,18 +1,14 @@
 import React from 'react';
 import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import _ from 'lodash';
-
-import {CloseIcon, SearchIcon} from '../../../assets/images';
+import {SearchIcon, CloseIcon} from '../../../assets/images';
 
 type Props = {
   onCancel: () => void;
   onChangeText: (value: string) => void;
 };
 
-export const InputSearch: React.FC<Props> = ({
-  onCancel,
-  onChangeText,
-}: Props) => {
+export const InputSearch: React.FC<Props> = ({onCancel, onChangeText}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const setOnChangeTextDebounced = React.useRef(
@@ -29,6 +25,7 @@ export const InputSearch: React.FC<Props> = ({
       <View style={styles.searchInputContainer}>
         <SearchIcon />
         <TextInput
+          testID="input"
           style={styles.searchInput}
           placeholder="Ingresa nombre o simbolo"
           placeholderTextColor="white"
@@ -37,6 +34,7 @@ export const InputSearch: React.FC<Props> = ({
         />
         <View style={styles.searchInputCancelContainer}>
           <TouchableOpacity
+            testID="cancel-button"
             onPress={() => {
               setSearchQuery('');
               onCancel();

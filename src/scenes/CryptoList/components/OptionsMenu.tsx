@@ -62,9 +62,13 @@ export const OptionsMenu: React.FC<Props> = ({
             onValueChange={toggleSwitch}
             value={isEnabled}
             style={{transform: [{scaleX: 0.8}, {scaleY: 0.8}]}}
+            testID="toggle-switch"
           />
         </View>
-        <TouchableOpacity onPress={toggleMenu} style={styles.toggleButton}>
+        <TouchableOpacity
+          onPress={toggleMenu}
+          style={styles.toggleButton}
+          testID="toggle-button">
           <SearchIcon />
         </TouchableOpacity>
       </View>
@@ -72,7 +76,8 @@ export const OptionsMenu: React.FC<Props> = ({
         style={[
           styles.menuContainer,
           {height: heightInterpolate, opacity: opacityInterpolate},
-        ]}>
+        ]}
+        testID="menu-container">
         <InputSearch
           onCancel={toggleMenu}
           onChangeText={value => onAction('SEARCH', value)}
@@ -82,7 +87,6 @@ export const OptionsMenu: React.FC<Props> = ({
   );
 };
 
-// TODO:
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

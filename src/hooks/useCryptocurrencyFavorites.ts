@@ -5,35 +5,31 @@ interface Favorites {
   [key: number]: number;
 }
 
-// TODO: mejorar
+const KEY = 'cryptocurrencyFav';
+
 export const useCryptocurrencyFavorites = () => {
   const [favorites, setFavorites] = React.useState<Favorites>({});
 
   const setFavoriteItems = React.useCallback(
     (id: number) => {
       if (favorites[id]) {
-        const newFavorites: Favorites = {...favorites};
+        const newFavorites = {...favorites};
         delete newFavorites[id];
+        setData(KEY, Object.values(newFavorites).join(','));
         setFavorites(newFavorites);
-        setData('cryptocurrencyFav', Object.values(newFavorites).join(','));
         return;
       }
 
-      setFavorites(prevFavorites => {
-        const value = {
-          ...prevFavorites,
-          [id]: id,
-        };
-        setData('cryptocurrencyFav', Object.values(value).join(','));
-        return value;
-      });
+      const newFavorites = {...favorites, [id]: id};
+      setData(KEY, Object.values(newFavorites).join(','));
+      setFavorites(newFavorites);
     },
     [favorites],
   );
 
   React.useEffect(() => {
     const init = async () => {
-      const cryptocurrencyFavFromStorage = await getData('cryptocurrencyFav');
+      const cryptocurrencyFavFromStorage = await getData(KEY);
       const cryptocurrencyFavToArray = cryptocurrencyFavFromStorage?.split(',');
       if (cryptocurrencyFavToArray?.length) {
         const cryptocurrencyFav: Favorites = cryptocurrencyFavToArray.reduce(
@@ -50,11 +46,11 @@ export const useCryptocurrencyFavorites = () => {
   }, []);
 
   const favoritesToString = async () => {
-    return (await getData('cryptocurrencyFav')) || '';
+    return (await getData(KEY)) || '';
   };
 
   const clearFavoriteItems = async () => {
-    return await setData('cryptocurrencyFav', '');
+    return await setData(KEY, '');
   };
 
   return {

@@ -14,8 +14,6 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-use_frameworks! :linkage => :static
-
 target 'lemonCashChallenge' do
   config = use_native_modules!
 

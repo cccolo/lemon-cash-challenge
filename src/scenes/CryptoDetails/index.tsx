@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import {
-  View,
-  Text,
+  ActivityIndicator,
   SafeAreaView,
   StyleSheet,
-  ActivityIndicator,
+  Text,
+  View,
 } from 'react-native';
 import {
   useNavigation,
@@ -18,18 +18,18 @@ import {formatDate} from '../../commons/formatDate';
 import {ItemDetail} from './components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RefreshIcon} from '../../assets/images';
-import {RootStackParamList} from '../../navigation/navigation';
+import {AppStackParamList} from '../../navigation/navigation';
+import { DARK_GREY, WHITE } from '../../const/colors';
 
 type CryptoDetailsRouteProp = RouteProp<
-  RootStackParamList,
-  'CryptoDetailsScreen'
+  AppStackParamList,
+  'CryptoDetailScreen'
 >;
 
-export const CryptoDetailsScreen: React.FC = () => {
+export const CryptoDetailScreen: React.FC = () => {
   const route = useRoute<CryptoDetailsRouteProp>();
   const {params} = route;
 
-  // TODO: case error
   const navigation = useNavigation();
 
   const {cryptocurrencyByIdQuery} = useCryptocurrencyById(
@@ -99,10 +99,9 @@ export const CryptoDetailsScreen: React.FC = () => {
   );
 };
 
-// TODO:
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(23, 23, 23)',
+    backgroundColor: DARK_GREY,
     flex: 1,
   },
   content: {
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   refreshText: {
-    color: 'white',
+    color: WHITE,
     marginTop: 6,
   },
 });

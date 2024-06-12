@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 import {LeftArroyIcon, ProfileIcon} from '../../assets/images';
+import {WHITE_400} from '../../const/colors';
 
 type Props = {
   onBack?: () => void;
@@ -37,7 +38,6 @@ export const Header: React.FC<Props> = ({title, hideBack, onBack}) => {
   );
 };
 
-// TODO:
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
   line: {
     height: 1,
     width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    backgroundColor: WHITE_400,
   },
 });

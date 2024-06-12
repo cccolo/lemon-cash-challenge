@@ -3,17 +3,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {SignInScreen} from '../scenes/SignIn';
 import CryptoListScreen from '../scenes/CryptoList';
-import {CryptoDetailsScreen} from '../scenes/CryptoDetails';
+import {CryptoDetailScreen} from '../scenes/CryptoDetails';
 import {Settings} from '../components';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-const screenOptions: any = {
+const screenOptions = {
   headerShown: false,
-  drawerPosition: 'right',
-  drawerType: 'front',
   drawerStyle: {
     width: 200,
   },
@@ -32,7 +30,7 @@ const AppStack = ({isSignout}: {isSignout: boolean}) => {
           <Stack.Screen name="CryptoListScreen" component={CryptoListScreen} />
           <Stack.Screen
             name="CryptoDetailScreen"
-            component={CryptoDetailsScreen}
+            component={CryptoDetailScreen}
           />
         </>
       )}
@@ -44,7 +42,7 @@ const AppNavigator = ({isSignout}: {isSignout: boolean}) => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        screenOptions={screenOptions}
+        screenOptions={{...screenOptions, drawerPosition: 'right'}}
         drawerContent={Settings}
         detachInactiveScreens>
         <Drawer.Screen name="App">

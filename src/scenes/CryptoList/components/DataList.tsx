@@ -10,6 +10,8 @@ import {
 import {CryptocurrencyData} from '../../../intefaces';
 import {StartIcon, StartSelectIcon} from '../../../assets/images';
 import {useCryptocurrencyFavorites} from '../../../hooks';
+import {REGULAR, ULTRA_BOLD} from '../../../const/fonts';
+import {GREEN, WHITE, WHITE_400} from '../../../const/colors';
 
 type Props = {
   data: CryptocurrencyData[];
@@ -45,7 +47,7 @@ export const DataList: React.FC<Props> = ({
   const ListEndLoader = React.useCallback(() => {
     if (isLoading) {
       return (
-        <View style={styles.loader}>
+        <View style={styles.loader} testID="activity-indicator">
           <ActivityIndicator size={'large'} />
         </View>
       );
@@ -55,7 +57,9 @@ export const DataList: React.FC<Props> = ({
   const renderItem = React.useCallback(
     (item: CryptocurrencyData) => {
       return (
-        <TouchableOpacity onPress={() => onSelectItem(item.id)}>
+        <TouchableOpacity
+          onPress={() => onSelectItem(item.id)}
+          testID={`item-${item.id}`}>
           <View style={styles.container}>
             <View>
               <Text style={[styles.description, styles.symbol]}>
@@ -73,7 +77,8 @@ export const DataList: React.FC<Props> = ({
             <View style={styles.favorites}>
               <TouchableOpacity
                 onPress={() => setFavoriteItems(item.id)}
-                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                testID={`favorite-button-${item.id}`}>
                 {favorites[item.id] ? <StartSelectIcon /> : <StartIcon />}
               </TouchableOpacity>
             </View>
@@ -109,10 +114,9 @@ export const DataList: React.FC<Props> = ({
   );
 };
 
-// TODO:
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'rgba(255, 255, 255, 0.4)',
+    borderColor: WHITE_400,
     borderRadius: 5,
     borderWidth: 1,
     flex: 1,
@@ -122,12 +126,12 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   symbol: {
-    fontFamily: 'NeueMachina-Ultrabold',
+    fontFamily: ULTRA_BOLD,
     textAlign: 'left',
     fontSize: 14,
   },
   name: {
-    color: 'white',
+    color: WHITE,
     fontSize: 12,
     textAlign: 'left',
   },
@@ -140,8 +144,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   description: {
-    color: 'rgb(0, 240, 104)',
-    fontFamily: 'NeueMachina-Regular',
+    color: GREEN,
+    fontFamily: REGULAR,
     textAlign: 'right',
     lineHeight: 16,
     fontSize: 12,

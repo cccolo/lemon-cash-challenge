@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationContainerRef, useNavigation} from '@react-navigation/native';
 import {
   useCryptocurrency,
   useCryptocurrencyFavorites,
@@ -10,6 +10,10 @@ import {
 import {Cryptocurrency, CryptocurrencyData} from '../../intefaces';
 import {OptionsMenu, DataList} from './components';
 import {Alert, Header} from '../../components';
+import {AppStackParamList} from '../../navigation/navigation';
+import {DARK_GREY} from '../../const/colors';
+
+type AppNavigation = NavigationContainerRef<AppStackParamList>;
 
 const CryptoListScreen: React.FC = () => {
   const [showError, setShowError] = React.useState(false);
@@ -17,8 +21,7 @@ const CryptoListScreen: React.FC = () => {
   const [enableFav, setEnableFav] = React.useState<boolean>(false);
   const [favoritesId, setFavoritesId] = React.useState<string>('');
 
-  // TODO: tipar navigation
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<AppNavigation>();
   const {favoritesToString} = useCryptocurrencyFavorites();
   const {cryptocurrencyInfiniteQuery} = useCryptocurrency();
   const {cryptocurrencyQueries} = useCryptocurrencySearch(searchValue);
@@ -71,7 +74,6 @@ const CryptoListScreen: React.FC = () => {
     setShowError(false);
   }, []);
 
-  // TODO:
   const onAction = async (
     type: 'SEARCH' | 'FAVORITES',
     value: string | boolean,
@@ -85,7 +87,7 @@ const CryptoListScreen: React.FC = () => {
         setFavoritesId(await favoritesToString());
         break;
       default:
-        break;
+        throw new Error(`Unsupported action type: ${type}`);
     }
   };
 
@@ -143,10 +145,9 @@ const CryptoListScreen: React.FC = () => {
   );
 };
 
-// TODO:
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(23, 23, 23)',
+    backgroundColor: DARK_GREY,
     flex: 1,
   },
   content: {

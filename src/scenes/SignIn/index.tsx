@@ -4,6 +4,8 @@ import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 import {Logo} from '../../assets/images';
 import {useAuth} from '../../hooks/useAuth';
 import {Alert} from '../../components';
+import {DARK_GREY, GREEN} from '../../const/colors';
+import {REGULAR} from '../../const/fonts';
 
 export const SignInScreen: React.FC = () => {
   const {signIn, error} = useAuth();
@@ -46,10 +48,9 @@ export const SignInScreen: React.FC = () => {
   );
 };
 
-// TODO
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(23, 23, 23)',
+    backgroundColor: DARK_GREY,
     flex: 1,
   },
   content: {
@@ -61,8 +62,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   description: {
-    color: 'rgb(0, 240, 104)',
-    fontFamily: 'NeueMachina-Regular',
+    color: GREEN,
+    fontFamily: REGULAR,
     fontSize: 18,
     marginTop: 50,
     lineHeight: 21,

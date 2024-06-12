@@ -1,7 +1,7 @@
-export type RootStackParamList = {
+export type AppStackParamList = {
   SignInScreen: undefined;
   CryptoListScreen: undefined;
-  CryptoDetailsScreen: {
+  CryptoDetailScreen: {
     id: number;
   };
 };

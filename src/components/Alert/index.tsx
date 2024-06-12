@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
+import {BLACK, BLACK_500, BRILLIANT_BLUE, WHITE} from '../../const/colors';
 
 type Props = {
   message: string;
@@ -30,22 +31,21 @@ export const Alert: React.FC<Props> = ({message, modalVisible, onClose}) => {
   );
 };
 
-// TODO
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: BLACK_500,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: WHITE,
     borderRadius: 10,
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: BLACK,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -61,10 +61,10 @@ const styles = StyleSheet.create({
     minWidth: '100%',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: BRILLIANT_BLUE,
   },
   textStyle: {
-    color: 'white',
+    color: WHITE,
     fontWeight: 'bold',
     textAlign: 'center',
   },

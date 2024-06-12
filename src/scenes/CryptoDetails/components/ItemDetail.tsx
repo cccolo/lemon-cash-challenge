@@ -1,5 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {GREEN, WHITE} from '../../../const/colors';
+import {REGULAR} from '../../../const/fonts';
 
 type Props = {
   title: string;
@@ -19,7 +21,6 @@ export const ItemDetail: React.FC<Props> = ({title, description}) => {
   );
 };
 
-// TODO:
 const styles = StyleSheet.create({
   table: {
     flexDirection: 'row',
@@ -29,8 +30,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: 'rgb(0, 240, 104)',
-    fontFamily: 'NeueMachina-Regular',
+    color: GREEN,
+    fontFamily: REGULAR,
     fontSize: 12,
   },
   valueContainer: {
@@ -38,8 +39,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   value: {
-    color: 'white',
-    fontFamily: 'NeueMachina-Regular',
+    color: WHITE,
+    fontFamily: REGULAR,
     fontSize: 12,
   },
 });

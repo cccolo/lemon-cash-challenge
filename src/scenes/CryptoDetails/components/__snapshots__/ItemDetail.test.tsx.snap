@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemDetail should render correctly and match snapshot 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "marginTop": 18,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "rgb(0, 240, 104)",
+          "fontFamily": "NeueMachina-Regular",
+          "fontSize": 12,
+        }
+      }
+    >
+      Test Title
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "flex-end",
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontFamily": "NeueMachina-Regular",
+          "fontSize": 12,
+        }
+      }
+    >
+      Test Description
+    </Text>
+  </View>
+</View>
+`;

@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputSearch Component renders correctly and matches snapshot 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "borderColor": "white",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "color": "white",
+        "flex": 1,
+        "flexDirection": "row",
+        "height": 40,
+        "marginBottom": 10,
+        "paddingLeft": 10,
+      }
+    }
+  >
+    <svgMock />
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="Ingresa nombre o simbolo"
+      placeholderTextColor="white"
+      style={
+        {
+          "color": "white",
+          "maxWidth": 260,
+          "paddingLeft": 10,
+        }
+      }
+      testID="input"
+      value=""
+    />
+    <View
+      style={
+        {
+          "alignItems": "flex-end",
+          "flex": 1,
+          "marginRight": 12,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="cancel-button"
+      >
+        <svgMock
+          style={
+            {
+              "color": "white",
+              "textAlign": "right",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;

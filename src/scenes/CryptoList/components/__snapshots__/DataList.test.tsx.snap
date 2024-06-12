@@ -1,0 +1,465 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataList Component renders correctly and matches snapshot 1`] = `
+<RCTScrollView
+  ListEmptyComponent={[Function]}
+  ListFooterComponent={[Function]}
+  data={
+    [
+      {
+        "circulating_supply": 19000000,
+        "cmc_rank": 1,
+        "date_added": 2024-06-12T14:58:53.329Z,
+        "id": 1,
+        "infinite_supply": false,
+        "last_updated": 2024-06-12T14:58:53.329Z,
+        "max_supply": 21000000,
+        "name": "Bitcoin",
+        "num_market_pairs": 10,
+        "platform": null,
+        "quote": {
+          "USD": {
+            "fully_diluted_market_cap": 630000000,
+            "last_updated": 2024-06-12T14:58:53.329Z,
+            "market_cap": 600000000,
+            "market_cap_dominance": 40,
+            "percent_change_1h": 0.1,
+            "percent_change_24h": 1,
+            "percent_change_30d": 30,
+            "percent_change_60d": 60,
+            "percent_change_7d": 7,
+            "percent_change_90d": 90,
+            "price": 30000,
+            "tvl": null,
+            "volume_24h": 1000000,
+            "volume_change_24h": 5,
+          },
+        },
+        "self_reported_circulating_supply": null,
+        "self_reported_market_cap": null,
+        "slug": "bitcoin",
+        "symbol": "BTC",
+        "tags": [
+          "tag1",
+          "tag2",
+        ],
+        "total_supply": 20000000,
+        "tvl_ratio": null,
+      },
+      {
+        "circulating_supply": 110000000,
+        "cmc_rank": 2,
+        "date_added": 2024-06-12T14:58:53.329Z,
+        "id": 2,
+        "infinite_supply": true,
+        "last_updated": 2024-06-12T14:58:53.329Z,
+        "max_supply": null,
+        "name": "Ethereum",
+        "num_market_pairs": 20,
+        "platform": null,
+        "quote": {
+          "USD": {
+            "fully_diluted_market_cap": 230000000,
+            "last_updated": 2024-06-12T14:58:53.329Z,
+            "market_cap": 220000000,
+            "market_cap_dominance": 20,
+            "percent_change_1h": 0.05,
+            "percent_change_24h": 0.5,
+            "percent_change_30d": 20,
+            "percent_change_60d": 50,
+            "percent_change_7d": 5,
+            "percent_change_90d": 80,
+            "price": 2000,
+            "tvl": null,
+            "volume_24h": 500000,
+            "volume_change_24h": 3,
+          },
+        },
+        "self_reported_circulating_supply": null,
+        "self_reported_market_cap": null,
+        "slug": "ethereum",
+        "symbol": "ETH",
+        "tags": [
+          "tag3",
+          "tag4",
+        ],
+        "total_supply": 120000000,
+        "tvl_ratio": null,
+      },
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onEndReached={[Function]}
+  onEndReachedThreshold={0.8}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={0.0001}
+  stickyHeaderIndices={[]}
+  viewabilityConfigCallbackPairs={[]}
+>
+  <View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="item-1"
+      >
+        <View
+          style={
+            {
+              "borderColor": "rgba(255, 255, 255, 0.4)",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flex": 1,
+              "flexDirection": "row",
+              "marginBottom": 5,
+              "marginTop": 5,
+              "padding": 8,
+            }
+          }
+        >
+          <View>
+            <Text
+              style={
+                [
+                  {
+                    "color": "rgb(0, 240, 104)",
+                    "fontFamily": "NeueMachina-Regular",
+                    "fontSize": 12,
+                    "lineHeight": 16,
+                    "textAlign": "right",
+                  },
+                  {
+                    "fontFamily": "NeueMachina-Ultrabold",
+                    "fontSize": 14,
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              BTC
+            </Text>
+            <View>
+              <Text
+                style={
+                  [
+                    {
+                      "color": "rgb(0, 240, 104)",
+                      "fontFamily": "NeueMachina-Regular",
+                      "fontSize": 12,
+                      "lineHeight": 16,
+                      "textAlign": "right",
+                    },
+                    {
+                      "color": "white",
+                      "fontSize": 12,
+                      "textAlign": "left",
+                    },
+                  ]
+                }
+              >
+                Bitcoin
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingRight": 10,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "rgb(0, 240, 104)",
+                  "fontFamily": "NeueMachina-Regular",
+                  "fontSize": 12,
+                  "lineHeight": 16,
+                  "textAlign": "right",
+                }
+              }
+            >
+              30000
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+              testID="favorite-button-1"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="item-2"
+      >
+        <View
+          style={
+            {
+              "borderColor": "rgba(255, 255, 255, 0.4)",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flex": 1,
+              "flexDirection": "row",
+              "marginBottom": 5,
+              "marginTop": 5,
+              "padding": 8,
+            }
+          }
+        >
+          <View>
+            <Text
+              style={
+                [
+                  {
+                    "color": "rgb(0, 240, 104)",
+                    "fontFamily": "NeueMachina-Regular",
+                    "fontSize": 12,
+                    "lineHeight": 16,
+                    "textAlign": "right",
+                  },
+                  {
+                    "fontFamily": "NeueMachina-Ultrabold",
+                    "fontSize": 14,
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              ETH
+            </Text>
+            <View>
+              <Text
+                style={
+                  [
+                    {
+                      "color": "rgb(0, 240, 104)",
+                      "fontFamily": "NeueMachina-Regular",
+                      "fontSize": 12,
+                      "lineHeight": 16,
+                      "textAlign": "right",
+                    },
+                    {
+                      "color": "white",
+                      "fontSize": 12,
+                      "textAlign": "left",
+                    },
+                  ]
+                }
+              >
+                Ethereum
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingRight": 10,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "rgb(0, 240, 104)",
+                  "fontFamily": "NeueMachina-Regular",
+                  "fontSize": 12,
+                  "lineHeight": 16,
+                  "textAlign": "right",
+                }
+              }
+            >
+              2000
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+              testID="favorite-button-2"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+    />
+  </View>
+</RCTScrollView>
+`;
