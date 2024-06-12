@@ -39,7 +39,7 @@ exports[`ItemDetail should render correctly and match snapshot 1`] = `
     <Text
       style={
         {
-          "color": "white",
+          "color": "rgb(255, 255, 255)",
           "fontFamily": "NeueMachina-Regular",
           "fontSize": 12,
         }

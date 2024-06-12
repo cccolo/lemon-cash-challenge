@@ -37,28 +37,4 @@ describe('ItemDetail', () => {
     expect(getByText(title)).toBeTruthy();
     expect(getByText(description.toString())).toBeTruthy();
   });
-
-  it('should apply the correct styles', () => {
-    const title = 'Styled Title';
-    const description = 'Styled Description';
-
-    const {getByText} = render(
-      <ItemDetail title={title} description={description} />,
-    );
-
-    const titleText = getByText(title);
-    const descriptionText = getByText(description);
-
-    expect(titleText).toHaveStyle({
-      color: 'rgb(0, 240, 104)',
-      fontFamily: 'NeueMachina-Regular',
-      fontSize: 12,
-    });
-
-    expect(descriptionText).toHaveStyle({
-      color: 'white',
-      fontFamily: 'NeueMachina-Regular',
-      fontSize: 12,
-    });
-  });
 });

@@ -19,7 +19,7 @@ import {ItemDetail} from './components';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {RefreshIcon} from '../../assets/images';
 import {AppStackParamList} from '../../navigation/navigation';
-import { DARK_GREY, WHITE } from '../../const/colors';
+import {DARK_GREY, WHITE} from '../../const/colors';
 
 type CryptoDetailsRouteProp = RouteProp<
   AppStackParamList,

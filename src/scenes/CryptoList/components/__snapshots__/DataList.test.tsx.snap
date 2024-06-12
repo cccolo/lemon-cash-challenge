@@ -194,7 +194,7 @@ exports[`DataList Component renders correctly and matches snapshot 1`] = `
                       "textAlign": "right",
                     },
                     {
-                      "color": "white",
+                      "color": "rgb(255, 255, 255)",
                       "fontSize": 12,
                       "textAlign": "left",
                     },
@@ -369,7 +369,7 @@ exports[`DataList Component renders correctly and matches snapshot 1`] = `
                       "textAlign": "right",
                     },
                     {
-                      "color": "white",
+                      "color": "rgb(255, 255, 255)",
                       "fontSize": 12,
                       "textAlign": "left",
                     },
