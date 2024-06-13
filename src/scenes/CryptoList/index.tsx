@@ -1,19 +1,21 @@
 import * as React from 'react';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Dimensions} from 'react-native';
 import {NavigationContainerRef, useNavigation} from '@react-navigation/native';
+import _ from 'lodash';
 import {
   useCryptocurrency,
   useCryptocurrencyFavorites,
   useCryptocurrencySearch,
   useCryptocurrencyById,
 } from '../../hooks';
-import {Cryptocurrency, CryptocurrencyData} from '../../intefaces';
 import {OptionsMenu, DataList} from './components';
 import {Alert, Header} from '../../components';
 import {AppStackParamList} from '../../navigation/navigation';
 import {DARK_GREY} from '../../const/colors';
 
 type AppNavigation = NavigationContainerRef<AppStackParamList>;
+
+const HEIGHT_OFFSET = 150;
 
 const CryptoListScreen: React.FC = () => {
   const [showError, setShowError] = React.useState(false);
@@ -23,77 +25,54 @@ const CryptoListScreen: React.FC = () => {
 
   const navigation = useNavigation<AppNavigation>();
   const {favoritesToString} = useCryptocurrencyFavorites();
+
   const {cryptocurrencyInfiniteQuery} = useCryptocurrency();
-  const {cryptocurrencyQueries} = useCryptocurrencySearch(searchValue);
+  const {cryptocurrencySearch} = useCryptocurrencySearch(searchValue);
   const {cryptocurrencyByIdQuery} = useCryptocurrencyById(
     favoritesId,
     enableFav,
   );
 
-  const extractData = (query?: Cryptocurrency) =>
-    query?.data ? Object.values(query.data).flat() : [];
-
-  const [cryptocurrencyBySymbolQuery, cryptocurrencyBySlugQuery] =
-    cryptocurrencyQueries;
-
-  React.useEffect(() => {
-    setShowError(
-      cryptocurrencyInfiniteQuery.isError ||
-        (cryptocurrencyBySymbolQuery.isError &&
-          cryptocurrencyBySlugQuery.isError),
-    );
-  }, [
-    cryptocurrencyInfiniteQuery.isError,
-    cryptocurrencyBySymbolQuery.isError,
-    cryptocurrencyBySlugQuery.isError,
-  ]);
-
-  const flattenedCryptocurrencyDataFromSearch = React.useMemo(() => {
-    const bySymbol = extractData(cryptocurrencyBySymbolQuery.data);
-    const bySlug = extractData(cryptocurrencyBySlugQuery.data);
-    const combinedData = [...bySymbol, ...bySlug];
-    const uniqueData = combinedData.filter(
-      (item, index, self) => index === self.findIndex(({id}) => id === item.id),
-    );
-    return uniqueData;
-  }, [cryptocurrencyBySlugQuery.data, cryptocurrencyBySymbolQuery.data]);
-
-  const flattenedCryptocurrencyFavData = React.useMemo(() => {
-    return extractData(cryptocurrencyByIdQuery.data);
-  }, [cryptocurrencyByIdQuery.data]);
-
-  const flattenedCryptocurrencyInifity: CryptocurrencyData[] = React.useMemo(
-    () =>
-      cryptocurrencyInfiniteQuery.data?.pages.flatMap(
-        (page: Cryptocurrency) => page.data,
-      ) || [],
-    [cryptocurrencyInfiniteQuery.data],
+  const setOnChangeTextDebounced = React.useRef(
+    _.debounce((text: string) => setSearchValue(text), 500),
   );
 
   const closeModal = React.useCallback(() => {
     setShowError(false);
   }, []);
 
-  const onAction = async (
-    type: 'SEARCH' | 'FAVORITES',
-    value: string | boolean,
-  ) => {
-    switch (type) {
-      case 'SEARCH':
-        setSearchValue(value as string);
-        break;
-      case 'FAVORITES':
-        setEnableFav(value as boolean);
-        setFavoritesId(await favoritesToString());
-        break;
-      default:
-        throw new Error(`Unsupported action type: ${type}`);
-    }
-  };
+  const onAction = React.useCallback(
+    async (type: 'SEARCH' | 'FAVORITES', value: string | boolean) => {
+      switch (type) {
+        case 'SEARCH':
+          setOnChangeTextDebounced.current(value as string);
+          break;
+        case 'FAVORITES':
+          setEnableFav(value as boolean);
+          setFavoritesId(await favoritesToString());
+          break;
+        default:
+          throw new Error(`Unsupported action type: ${type}`);
+      }
+    },
+    [favoritesToString],
+  );
 
   const goToCryptoDetail = (id: number) => {
     navigation.navigate('CryptoDetailScreen', {id});
   };
+
+  React.useEffect(() => {
+    setShowError(
+      cryptocurrencyInfiniteQuery.isError ||
+        cryptocurrencySearch.isError ||
+        cryptocurrencyByIdQuery.isError,
+    );
+  }, [
+    cryptocurrencyByIdQuery.isError,
+    cryptocurrencyInfiniteQuery.isError,
+    cryptocurrencySearch.isError,
+  ]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -103,43 +82,42 @@ const CryptoListScreen: React.FC = () => {
           onAction={onAction}
           onToggleMenu={() => setSearchValue('')}
         />
-        {enableFav && (
-          <DataList
-            onSelectItem={goToCryptoDetail}
-            data={flattenedCryptocurrencyFavData}
-            hasPagination={false}
-            isLoading={cryptocurrencyByIdQuery.isFetching}
-          />
-        )}
-        {!enableFav && searchValue && (
-          <DataList
-            onSelectItem={goToCryptoDetail}
-            data={flattenedCryptocurrencyDataFromSearch}
-            isLoading={
-              cryptocurrencyBySlugQuery.isFetching ||
-              cryptocurrencyBySymbolQuery.isFetching
-            }
-          />
-        )}
-        {!enableFav && !searchValue && (
-          <DataList
-            onSelectItem={goToCryptoDetail}
-            data={flattenedCryptocurrencyInifity}
-            hasPagination={cryptocurrencyInfiniteQuery.hasNextPage}
-            fetchNextPage={cryptocurrencyInfiniteQuery.fetchNextPage}
-            isLoading={
-              cryptocurrencyInfiniteQuery.isFetchingNextPage ||
-              cryptocurrencyInfiniteQuery.isFetching
-            }
-          />
-        )}
-        {showError && (
-          <Alert
-            message="Ouch! Ocurrio un problema, vuelva a intentarlo nuevamente"
-            modalVisible={showError}
-            onClose={closeModal}
-          />
-        )}
+        <View style={styles.dataListContainer}>
+          {enableFav && (
+            <DataList
+              onSelectItem={goToCryptoDetail}
+              data={cryptocurrencyByIdQuery.data || []}
+              hasPagination={false}
+              isLoading={cryptocurrencyByIdQuery.isFetching}
+            />
+          )}
+          {!enableFav && searchValue && (
+            <DataList
+              onSelectItem={goToCryptoDetail}
+              data={cryptocurrencySearch.data}
+              isLoading={cryptocurrencySearch.isFetching}
+            />
+          )}
+          {!enableFav && !searchValue && (
+            <DataList
+              onSelectItem={goToCryptoDetail}
+              data={cryptocurrencyInfiniteQuery.data}
+              hasPagination={cryptocurrencyInfiniteQuery.hasNextPage}
+              fetchNextPage={cryptocurrencyInfiniteQuery.fetchNextPage}
+              isLoading={
+                cryptocurrencyInfiniteQuery.isFetchingNextPage ||
+                cryptocurrencyInfiniteQuery.isFetching
+              }
+            />
+          )}
+          {showError && (
+            <Alert
+              message="Ouch! Ocurrio un problema, vuelva a intentarlo nuevamente"
+              modalVisible={showError}
+              onClose={closeModal}
+            />
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -152,6 +130,10 @@ const styles = StyleSheet.create({
   },
   content: {
     margin: 16,
+  },
+  dataListContainer: {
+    marginBottom: 150,
+    height: Dimensions.get('window').height - HEIGHT_OFFSET,
   },
 });
 

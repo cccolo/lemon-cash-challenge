@@ -1,6 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {coinMarketCapAPi} from '../api/coinMarketCapAPi';
 import {Cryptocurrency} from '../intefaces';
+import {flatData} from '../commons/utils';
 
 const getCryptocurrencyById = async (
   value: string | number,
@@ -18,8 +19,9 @@ export const useCryptocurrencyById = (
   refetchIntervalEnabled = false,
 ) => {
   const cryptocurrencyByIdQuery = useQuery({
-    queryKey: ['cryptocurrency', 'listings', 'id', value],
+    queryKey: ['cryptocurrency', 'listings', {id: value}],
     queryFn: async () => await getCryptocurrencyById(value),
+    select: (data: Cryptocurrency) => flatData(data?.data),
     enabled: enabled && !!value,
     refetchInterval: refetchIntervalEnabled && 30000,
   });

@@ -1,52 +1,94 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useCryptocurrencySearch} from './useCryptocurrencySearch';
 import {useQueries} from '@tanstack/react-query';
+import {useCryptocurrencySearch} from './useCryptocurrencySearch';
+import {flatData} from '../commons/utils';
 
 jest.mock('@tanstack/react-query', () => ({
   useQueries: jest.fn(),
 }));
 
+jest.mock('../api/coinMarketCapAPi', () => ({
+  coinMarketCapAPi: {
+    get: jest.fn(),
+  },
+}));
+
+jest.mock('../commons/utils', () => ({
+  flatData: jest.fn(),
+}));
+
 describe('useCryptocurrencySearch', () => {
+  const flatMockData = [
+    {id: 1, name: 'Bitcoin', symbol: 'BTC'},
+    {id: 2, name: 'Ethereum', symbol: 'ETH'},
+  ];
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    (flatData as jest.Mock).mockImplementation(data => data);
   });
 
-  it('should call useQueries with correct arguments when value is provided', () => {
-    const value = 'BTC';
-    renderHook(() => useCryptocurrencySearch(value));
+  it('should return combined and unique data from symbol and slug queries', async () => {
+    (useQueries as jest.Mock).mockImplementation(() => [
+      {
+        data: flatMockData,
+        isFetching: false,
+        isError: false,
+      },
+      {
+        data: [],
+        isFetching: false,
+        isError: false,
+      },
+    ]);
 
-    expect(useQueries).toHaveBeenCalledWith({
-      queries: [
-        {
-          queryKey: ['cryptocurrency', 'listings', 'symbol', value],
-          queryFn: expect.any(Function),
-          enabled: true,
-        },
-        {
-          queryKey: ['cryptocurrency', 'listings', 'slug', value],
-          queryFn: expect.any(Function),
-          enabled: true,
-        },
-      ],
-    });
+    const {result, waitFor} = renderHook(() => useCryptocurrencySearch('BTC'));
+
+    await waitFor(() =>
+      expect(result.current.cryptocurrencySearch.data).toHaveLength(2),
+    );
+
+    expect(result.current.cryptocurrencySearch.data).toEqual(flatMockData);
   });
 
-  it('should call useQueries with correct arguments when value is not provided', () => {
-    renderHook(() => useCryptocurrencySearch(''));
+  it('should handle errors correctly', async () => {
+    (useQueries as jest.Mock).mockImplementation(() => [
+      {
+        data: [],
+        isFetching: false,
+        isError: true,
+      },
+      {
+        data: [],
+        isFetching: false,
+        isError: true,
+      },
+    ]);
 
-    expect(useQueries).toHaveBeenCalledWith({
-      queries: [
-        {
-          queryKey: ['cryptocurrency', 'listings', 'symbol', ''],
-          queryFn: expect.any(Function),
-          enabled: false,
-        },
-        {
-          queryKey: ['cryptocurrency', 'listings', 'slug', ''],
-          queryFn: expect.any(Function),
-          enabled: false,
-        },
-      ],
-    });
+    const {result, waitFor} = renderHook(() => useCryptocurrencySearch('BTC'));
+
+    await waitFor(() =>
+      expect(result.current.cryptocurrencySearch.isError).toBe(true),
+    );
+  });
+
+  it('should handle fetching state correctly', async () => {
+    (useQueries as jest.Mock).mockImplementation(() => [
+      {
+        data: [],
+        isFetching: true,
+        isError: false,
+      },
+      {
+        data: [],
+        isFetching: false,
+        isError: false,
+      },
+    ]);
+
+    const {result, waitFor} = renderHook(() => useCryptocurrencySearch('BTC'));
+
+    await waitFor(() =>
+      expect(result.current.cryptocurrencySearch.isFetching).toBe(true),
+    );
   });
 });

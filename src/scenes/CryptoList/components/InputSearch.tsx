@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
-import _ from 'lodash';
 import {SearchIcon, CloseIcon} from '../../../assets/images';
 
 type Props = {
@@ -11,13 +10,9 @@ type Props = {
 export const InputSearch: React.FC<Props> = ({onCancel, onChangeText}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const setOnChangeTextDebounced = React.useRef(
-    _.debounce((text: string) => onChangeText(text), 500),
-  );
-
   const handleSearch = (text: string) => {
     setSearchQuery(text);
-    setOnChangeTextDebounced.current(text);
+    onChangeText(text);
   };
 
   return (

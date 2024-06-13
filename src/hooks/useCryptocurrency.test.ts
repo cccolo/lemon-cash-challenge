@@ -1,5 +1,5 @@
-import {renderHook} from '@testing-library/react-hooks';
 import {useInfiniteQuery} from '@tanstack/react-query';
+import {renderHook} from '@testing-library/react-hooks';
 import {useCryptocurrency} from './useCryptocurrency';
 
 jest.mock('@tanstack/react-query', () => ({
@@ -7,55 +7,57 @@ jest.mock('@tanstack/react-query', () => ({
 }));
 
 describe('useCryptocurrency', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  const mockData = {
+    pages: [
+      {
+        data: [
+          {id: 1, name: 'Bitcoin', symbol: 'BTC'},
+          {id: 2, name: 'Ethereum', symbol: 'ETH'},
+        ],
+      },
+      {
+        data: [{id: 3, name: 'Ripple', symbol: 'XRP'}],
+      },
+    ],
+  };
 
-  test('Should call useInfiniteQuery with the correct arguments', () => {
-    renderHook(() => useCryptocurrency());
-
-    expect(useInfiniteQuery).toHaveBeenCalledWith(
-      expect.objectContaining({
-        queryKey: ['cryptocurrency', 'listings'],
-        queryFn: expect.any(Function),
-        initialPageParam: 1,
-        getNextPageParam: expect.any(Function),
-      }),
-    );
-  });
-
-  test('Should return the query correctly', () => {
-    const expectedResult = {
-      data: [
-        {
-          id: 1,
-          name: 'Bitcoin',
-          symbol: 'BTC',
-        },
-        {
-          id: 2,
-          name: 'Ethereum',
-          symbol: 'ETH',
-        },
-      ],
+  it('should return flattened cryptocurrency data', async () => {
+    (useInfiniteQuery as jest.Mock).mockImplementation(() => ({
+      data: mockData,
+      fetchNextPage: jest.fn(),
       hasNextPage: true,
-      isError: false,
       isFetchingNextPage: false,
       isLoading: false,
-    };
+      isError: false,
+    }));
 
-    useInfiniteQuery.mockReturnValueOnce(expectedResult);
+    const {result, waitFor} = renderHook(() => useCryptocurrency());
 
-    const {result} = renderHook(() => useCryptocurrency());
+    await waitFor(
+      () => result.current.cryptocurrencyInfiniteQuery.data.length > 0,
+    );
 
-    expect(result.current.cryptocurrencyInfiniteQuery).toEqual(expectedResult);
+    expect(result.current.cryptocurrencyInfiniteQuery.data).toEqual([
+      {id: 1, name: 'Bitcoin', symbol: 'BTC'},
+      {id: 2, name: 'Ethereum', symbol: 'ETH'},
+      {id: 3, name: 'Ripple', symbol: 'XRP'},
+    ]);
   });
 
-  test('Should return the query as undefined if not initialized', () => {
-    useInfiniteQuery.mockReturnValueOnce(undefined);
+  it('should handle empty data correctly', async () => {
+    (useInfiniteQuery as jest.Mock).mockImplementation(() => ({
+      data: {pages: []},
+      fetchNextPage: jest.fn(),
+      hasNextPage: false,
+      isFetchingNextPage: false,
+      isLoading: false,
+      isError: false,
+    }));
 
-    const {result} = renderHook(() => useCryptocurrency());
+    const {result, waitFor} = renderHook(() => useCryptocurrency());
 
-    expect(result.current.cryptocurrencyInfiniteQuery).toBeUndefined();
+    await waitFor(() => !result.current.cryptocurrencyInfiniteQuery.isLoading);
+
+    expect(result.current.cryptocurrencyInfiniteQuery.data).toEqual([]);
   });
 });

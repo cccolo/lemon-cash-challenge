@@ -21,10 +21,11 @@ describe('useCryptocurrencyById', () => {
     );
 
     expect(useQuery).toHaveBeenCalledWith({
-      queryKey: ['cryptocurrency', 'listings', 'id', value],
+      queryKey: ['cryptocurrency', 'listings', {id: value}],
       queryFn: expect.any(Function),
       enabled: true,
       refetchInterval: false,
+      select: expect.any(Function),
     });
   });
 
@@ -38,10 +39,11 @@ describe('useCryptocurrencyById', () => {
     );
 
     expect(useQuery).toHaveBeenCalledWith({
-      queryKey: ['cryptocurrency', 'listings', 'id', value],
+      queryKey: ['cryptocurrency', 'listings', {id: value}],
       queryFn: expect.any(Function),
       enabled: true,
       refetchInterval: 30000,
+      select: expect.any(Function),
     });
   });
 
@@ -55,10 +57,11 @@ describe('useCryptocurrencyById', () => {
     );
 
     expect(useQuery).toHaveBeenCalledWith({
-      queryKey: ['cryptocurrency', 'listings', 'id', value],
+      queryKey: ['cryptocurrency', 'listings', {id: value}],
       queryFn: expect.any(Function),
       enabled: false,
       refetchInterval: false,
+      select: expect.any(Function),
     });
   });
 });

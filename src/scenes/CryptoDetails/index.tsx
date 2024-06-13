@@ -12,7 +12,7 @@ import {
   CommonActions,
   RouteProp,
 } from '@react-navigation/native';
-import {Header} from '../../components';
+import {Alert, Header} from '../../components';
 import {useCryptocurrencyById} from '../../hooks';
 import {formatDate} from '../../commons/formatDate';
 import {ItemDetail} from './components';
@@ -27,6 +27,8 @@ type CryptoDetailsRouteProp = RouteProp<
 >;
 
 export const CryptoDetailScreen: React.FC = () => {
+  const [modalVisible, setModalVisible] = React.useState(false);
+
   const route = useRoute<CryptoDetailsRouteProp>();
   const {params} = route;
 
@@ -38,15 +40,8 @@ export const CryptoDetailScreen: React.FC = () => {
     true,
   );
 
-  const data = React.useMemo(() => {
-    if (!cryptocurrencyByIdQuery?.isFetching) {
-      return cryptocurrencyByIdQuery?.data?.data[params.id];
-    }
-  }, [
-    cryptocurrencyByIdQuery?.data?.data,
-    cryptocurrencyByIdQuery?.isFetching,
-    params.id,
-  ]);
+  const [data] = cryptocurrencyByIdQuery.data || [];
+  const {error, isFetching, refetch} = cryptocurrencyByIdQuery;
 
   const onBack = React.useCallback(() => {
     navigation.dispatch(
@@ -57,15 +52,25 @@ export const CryptoDetailScreen: React.FC = () => {
     );
   }, [navigation]);
 
+  const closeModal = React.useCallback(() => {
+    setModalVisible(false);
+  }, []);
+
+  React.useEffect(() => {
+    if (error) {
+      setModalVisible(true);
+    }
+  }, [error]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Detalles de Criptomoneda" onBack={onBack} />
-      {cryptocurrencyByIdQuery?.isFetching && (
+      {isFetching && (
         <View style={styles.loader}>
           <ActivityIndicator size={'large'} />
         </View>
       )}
-      {data && (
+      {!isFetching && data && (
         <View style={styles.content}>
           <ItemDetail title="Nombre:" description={data.name || ''} />
           <ItemDetail title="Simbolo:" description={data.symbol || ''} />
@@ -88,12 +93,19 @@ export const CryptoDetailScreen: React.FC = () => {
             }
           />
           <View style={styles.refresh}>
-            <TouchableOpacity onPress={cryptocurrencyByIdQuery.refetch}>
+            <TouchableOpacity onPress={refetch}>
               <RefreshIcon />
             </TouchableOpacity>
             <Text style={styles.refreshText}>Refrescar</Text>
           </View>
         </View>
+      )}
+      {error && (
+        <Alert
+          message={error.message}
+          modalVisible={modalVisible}
+          onClose={closeModal}
+        />
       )}
     </SafeAreaView>
   );

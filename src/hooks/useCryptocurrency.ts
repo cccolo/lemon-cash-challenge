@@ -1,6 +1,7 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {coinMarketCapAPi} from '../api/coinMarketCapAPi';
-import {Cryptocurrency} from '../intefaces';
+import {Cryptocurrency, CryptocurrencyData} from '../intefaces';
+import React from 'react';
 
 interface QueryProps {
   pageParam: number;
@@ -33,7 +34,18 @@ export const useCryptocurrency = () => {
     },
   });
 
+  const flatCryptocurrencyInifity: CryptocurrencyData[] = React.useMemo(
+    () =>
+      cryptocurrencyInfiniteQuery?.data?.pages.flatMap(
+        (page: Cryptocurrency) => page.data,
+      ) || [],
+    [cryptocurrencyInfiniteQuery?.data],
+  );
+
   return {
-    cryptocurrencyInfiniteQuery,
+    cryptocurrencyInfiniteQuery: {
+      ...cryptocurrencyInfiniteQuery,
+      data: flatCryptocurrencyInifity,
+    },
   };
 };
